@@ -1,0 +1,14 @@
+<% project_name = '30-days-challenges-api' %>
+
+default: &default
+  adapter: postgresql
+  encoding: unicode
+  pool: <%= ENV.fetch('RAILS_MAX_THREADS') { 5 } %>
+
+development:
+  <<: *default
+  database: <%= project_name %>_development
+  # name of my database
+test:
+  <<: *default
+  database: <%= project_name %>_test
