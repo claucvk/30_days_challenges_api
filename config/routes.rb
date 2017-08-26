@@ -1,14 +1,16 @@
 # frozen_string_literal: true
 Rails.application.routes.draw do
-  
-  resources :diaries
-  resources :challenges
+
   resources :examples, except: [:new, :edit]
+
   post '/sign-up' => 'users#signup'
   post '/sign-in' => 'users#signin'
   delete '/sign-out/:id' => 'users#signout'
   patch '/change-password/:id' => 'users#changepw'
+
   resources :users, only: [:index, :show]
 
+  resources :challenges, only: [:index, :show, :create, :update, :destroy]
+  resources :diaries, only: [:index, :show, :create, :update, :destroy]
 
 end
