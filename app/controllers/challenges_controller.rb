@@ -1,12 +1,12 @@
-class ChallengesController < ApplicationController
+class ChallengesController < OpenReadController
   before_action :set_challenge, only: [:show, :update, :destroy]
 
   # GET /challenges
   def index
-    @challenges = Challenge.all
+    @challenges = Challenge.find_by(user_id: params[:user_id])
 
     render json: @challenges
-  end
+end
 
   # GET /challenges/1
   def show
@@ -26,15 +26,22 @@ class ChallengesController < ApplicationController
 
   # PATCH/PUT /challenges/1
   def update
-    if @challenge.update(challenge_params)
-      render json: @challenge
-    else
-      render json: @challenge.errors, status: :unprocessable_entity
-    end
+    @user = User.find(params[:id])
+    @id = params[:challenge][:id]
+    @challenge = @user.challenges.find(@id)
+   @challenge.update(challenge_params)
+    #if @challenge.update(challenge_params)
+    #  render json: @challenge
+    #else
+    #  render json: @challenge.errors, status: :unprocessable_entity
+    #end
   end
 
   # DELETE /challenges/1
   def destroy
+    @user = User.find(params[:id])
+    @id = params[:challenge][:id]
+    @challenge = @user.challenges.find(@id)
     @challenge.destroy
   end
 
