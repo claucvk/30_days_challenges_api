@@ -3,7 +3,8 @@ class ChallengesController < OpenReadController
 
   # GET /challenges
   def index
-    @challenges = Challenge.find_by(user_id: params[:user_id])
+    #@user_challenges = Challenge.where('user_id = ?', current_user.id)
+    @challenges = Challenge.where(:user_id => params[:user_id])
 
     render json: @challenges
 end
