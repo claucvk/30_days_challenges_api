@@ -3,7 +3,6 @@ class ChallengesController < OpenReadController
 
   # GET /challenges
   def index
-    #@user_challenges = Challenge.where('user_id = ?', current_user.id)
     @challenges = Challenge.where(:user_id => params[:user_id])
 
     render json: @challenges
@@ -27,22 +26,16 @@ end
 
   # PATCH/PUT /challenges/1
   def update
-    @user = User.find(params[:id])
-    @id = params[:challenge][:id]
-    @challenge = @user.challenges.find(@id)
-   @challenge.update(challenge_params)
-    #if @challenge.update(challenge_params)
-    #  render json: @challenge
-    #else
-    #  render json: @challenge.errors, status: :unprocessable_entity
-    #end
+    if @challenge.update(challenge_params)
+     render json: @challenge
+    else
+      render json: @challenge.errors, status: :unprocessable_entity
+    end
   end
 
   # DELETE /challenges/1
   def destroy
-    @user = User.find(params[:id])
-    @id = params[:challenge][:id]
-    @challenge = @user.challenges.find(@id)
+
     @challenge.destroy
   end
 
