@@ -7,7 +7,7 @@ class CreateChallenges < ActiveRecord::Migration[5.0]
       t.date :start_day
       t.date :end_day
       t.boolean :status
-      t.references :user, foreign_key: true
+      #t.references :user, foreign_key: true
 
       t.timestamps
     end
