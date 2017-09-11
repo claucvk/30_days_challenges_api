@@ -11,20 +11,24 @@ if Rails.env.development?
   development_cors_port = 'GA'.each_byte.reduce('') do |a, e|
     a + format('%d', e)
   end.to_i
-  development_client_origin = "https://immense-sands-36854.herokuapp.com/:#{development_cors_port}"
+  development_client_origin = "http://localhost:#{development_cors_port}"
 end
 
-development_client_origin ||= ENV['CLIENT_ORIGIN']
-
-Rails.application.config.middleware.insert_before 0, Rack::Cors do
-  allow do
-    origins do |origin, _env|
-      '*' == ENV['CLIENT_ORIGIN'] ||
-        origin == ENV['CLIENT_ORIGIN'] ||
-        origin == development_client_origin
+config.middleware.insert_before 0, Rack::Cors do
+      allow do
+        origins '*'
+        resource '*', :headers => :any, :methods => [:get, :post, :options]
+      end
     end
-    resource '*',
-             headers: :any,
-             methods: [:options, :head, :get, :delete, :patch, :put, :post]
+
+    # Rails 3/4
+
+    config.middleware.insert_before 0, "Rack::Cors" do
+      allow do
+        origins '*'
+        resource '*', :headers => :any, :methods => [:get, :post, :options]
+      end
+    end
+
   end
 end
