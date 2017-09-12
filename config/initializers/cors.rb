@@ -6,7 +6,7 @@
 # cross-origin AJAX requests.
 
 # Read more: https://github.com/cyu/rack-cors
-
+=begin
 if Rails.env.development?
   development_cors_port = 'GA'.each_byte.reduce('') do |a, e|
     a + format('%d', e)
@@ -28,3 +28,4 @@ Rails.application.config.middleware.insert_before 0, Rack::Cors do
              methods: [:options, :head, :get, :delete, :patch, :put, :post]
   end
 end
+=end
