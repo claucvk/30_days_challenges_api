@@ -35,14 +35,13 @@ end
 
   # DELETE /challenges/1
   def destroy
-    
-   @challenge.destroy
+
+    @challenge.destroy
   end
 
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_challenge
-
       @challenge = Challenge.find(params[:id])
     end
 

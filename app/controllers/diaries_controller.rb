@@ -3,7 +3,7 @@ class DiariesController < ApplicationController
 
   # GET /diaries
   def index
-    @diaries = Diary.where(:challenge_id => params[:challenge_id])
+    @diaries = Diary.all
 
     render json: @diaries
   end
