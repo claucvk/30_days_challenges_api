@@ -1,21 +1,22 @@
-class DiariesController < ApplicationController
+class DiariesController < OpenReadController
   before_action :set_diary, only: [:show, :update, :destroy]
 
   # GET /diaries
   def index
-    @diaries = Diary.all
+    @diaries = current_user.diaries
 
     render json: @diaries
   end
 
   # GET /diaries/1
   def show
+    @diary = current_user.diaries.find(params[:id])
     render json: @diary
   end
 
   # POST /diaries
   def create
-    @diary = Diary.new(diary_params)
+    @diary = current_user.diaries.build(diary_params)
 
     if @diary.save
       render json: @diary, status: :created, location: @diary
@@ -26,8 +27,9 @@ class DiariesController < ApplicationController
 
   # PATCH/PUT /diaries/1
   def update
+    @diary = current_user.diaries.find(params[:id])
     if @diary.update(diary_params)
-      render json: @diary
+      head :no_content
     else
       render json: @diary.errors, status: :unprocessable_entity
     end
@@ -35,13 +37,15 @@ class DiariesController < ApplicationController
 
   # DELETE /diaries/1
   def destroy
+    @diary = current_user.diaries.find(params[:id])
     @diary.destroy
+    head :no_content
   end
 
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_diary
-      @diary = Diary.find(params[:id])
+      @diary = current_user.diaries.find(params[:id])
     end
 
     # Only allow a trusted parameter "white list" through.

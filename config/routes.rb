@@ -10,7 +10,7 @@ Rails.application.routes.draw do
 
   resources :users, only: [:index, :show]
 
-  resources :challenges, except: [:new, :edit]
+  resources :challenges, only: [:index, :show, :create, :update, :destroy]
   resources :diaries, only: [:index, :show, :create, :update, :destroy]
 
 end

@@ -3,19 +3,20 @@ class ChallengesController < OpenReadController
 
   # GET /challenges
   def index
-    @challenges = Challenge.where(:user_id => params[:user_id])
+    @challenges = current_user.challenges
 
     render json: @challenges
 end
 
   # GET /challenges/1
   def show
+    @challenge = current_user.challenges.find(params[:id])
     render json: @challenge
   end
 
   # POST /challenges
   def create
-    @challenge = Challenge.new(challenge_params)
+    @challenge = current_user.challenges.build(challenge_params)
     if @challenge.save
       render json: @challenge, status: :created, location: @challenge
     else
@@ -26,6 +27,7 @@ end
 
   # PATCH/PUT /challenges/1
   def update
+    @challenge = current_user.challenges.find(params[:id])
     if @challenge.update(challenge_params)
      render json: @challenge
     else
@@ -42,7 +44,7 @@ end
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_challenge
-      @challenge = Challenge.find(params[:id])
+      @challenge = current_user.challenges.find(params[:id])
     end
 
     # Only allow a trusted parameter "white list" through.
