@@ -1,10 +1,9 @@
 #!/bin/bash
 
 API="${API_ORIGIN:-http://localhost:4741}"
-URL_PATH="/challenges"
-curl "${API}${URL_PATH}/$ID" \
+URL_PATH="/diairies"
+curl "${API}${URL_PATH}" \
   --include \
   --request GET \
   --header "Authorization: Token token=$TOKEN"
-
 echo

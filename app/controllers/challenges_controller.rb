@@ -1,10 +1,10 @@
-class ChallengesController < OpenReadController
+class ChallengesController < ProtectedController
   before_action :set_challenge, only: [:show, :update, :destroy]
 
   # GET /challenges
   def index
     @challenges = current_user.challenges
-
+    #@challenges = Challenge.where(:user_id => params[:user_id])
     render json: @challenges
 end
 
