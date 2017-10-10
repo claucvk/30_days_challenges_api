@@ -37,8 +37,9 @@ end
 
   # DELETE /challenges/1
   def destroy
-
+    @challenge = current_user.challenges.find(params[:id])
     @challenge.destroy
+    head :no_content
   end
 
   private

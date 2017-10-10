@@ -2,5 +2,4 @@
 class User < ApplicationRecord
   include Authentication
   has_many :challenges
-  has_many :examples
 end

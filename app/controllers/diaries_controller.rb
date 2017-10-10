@@ -1,4 +1,4 @@
-class DiariesController < OpenReadController
+class DiariesController < ProtectedController
   before_action :set_diary, only: [:show, :update, :destroy]
 
   # GET /diaries
@@ -16,11 +16,15 @@ class DiariesController < OpenReadController
 
   # POST /diaries
   def create
-    @diary = current_user.diaries.build(diary_params)
+    # binding.pry
+    @challenge = Challenge.find(diary_params["challenge_id"])
+    # @diary = current_user.diaries.build(diary_params)
+    @diary = @challenge.diaries.build(diary_params)
 
     if @diary.save
       render json: @diary, status: :created, location: @diary
     else
+      puts @diary
       render json: @diary.errors, status: :unprocessable_entity
     end
   end
