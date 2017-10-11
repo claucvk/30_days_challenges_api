@@ -3,20 +3,21 @@ class DiariesController < ProtectedController
 
   # GET /diaries
   def index
-    @diaries = current_user.diaries
+    @challenge = Challenge.find(params["challenge_id"])
+    # @diaries = Diary.where(:challenge_id => params[:challenge_id])
+    @diaries = @challenge.diaries
 
     render json: @diaries
   end
 
   # GET /diaries/1
   def show
-    @diary = current_user.diaries.find(params[:id])
+    @diary = Diary.find(params[:id])
     render json: @diary
   end
 
   # POST /diaries
   def create
-    # binding.pry
     @challenge = Challenge.find(diary_params["challenge_id"])
     # @diary = current_user.diaries.build(diary_params)
     @diary = @challenge.diaries.build(diary_params)
@@ -49,7 +50,7 @@ class DiariesController < ProtectedController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_diary
-      @diary = current_user.diaries.find(params[:id])
+      @diary = Diary.find(params[:id])
     end
 
     # Only allow a trusted parameter "white list" through.
