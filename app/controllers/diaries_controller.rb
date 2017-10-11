@@ -42,7 +42,7 @@ class DiariesController < ProtectedController
 
   # DELETE /diaries/1
   def destroy
-    @diary = current_user.diaries.find(params[:id])
+    @diary = Diary.find(params[:id])
     @diary.destroy
     head :no_content
   end
