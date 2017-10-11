@@ -32,7 +32,7 @@ class DiariesController < ProtectedController
 
   # PATCH/PUT /diaries/1
   def update
-    @diary = current_user.diaries.find(params[:id])
+    @diary = Diary.find(params[:id])
     if @diary.update(diary_params)
       head :no_content
     else
